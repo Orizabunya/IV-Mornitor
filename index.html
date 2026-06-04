@@ -2085,12 +2085,13 @@ function updateRefreshUI(){
    ALERT BANNER
 ══════════════════════════════════ */
 function updateAlertBanner(){
-  const a=sites.filter(s=>!s.ended);
+  const a=getVisibleSites().filter(s=>!s.ended);
   const c=a.filter(s=>getSiteStatus(s)==='critical'),w=a.filter(s=>getSiteStatus(s)==='warning');
   const banner=document.getElementById('alertBanner'),icon=document.getElementById('alertIcon'),
     title=document.getElementById('alertTitle'),sub=document.getElementById('alertSub'),
     pa=document.getElementById('alertPatients');
-  const wn=currentSession?.wardName||'—';
+  const isAdmin=currentSession?.role==='ADMIN';
+  const wn=isAdmin?'ทุกหอ (Admin view)':(currentSession?.wardName||'—');
   if(c.length>0){
     banner.className='alert-banner status-crit';icon.textContent='🚨';
     title.textContent=`วิกฤต! ${c.length} IV Site เกิน limit — ต้องเปลี่ยนด่วน`;
@@ -2110,9 +2111,18 @@ function updateAlertBanner(){
 /* ══════════════════════════════════
    FILTER + STATS
 ══════════════════════════════════ */
+function getVisibleSites(){
+  const isAdmin=currentSession?.role==='ADMIN';
+  const myWardId=currentSession?.sheetId||'';
+  if(isAdmin) return sites; // ADMIN เห็นทุกหอ
+  // NURSE/VIEWER เห็นเฉพาะ site ของผู้ป่วยในหอตัวเอง
+  const myPtIds=new Set(patients.filter(p=>!p.wardId||p.wardId===myWardId).map(p=>p.id));
+  return sites.filter(s=>myPtIds.has(s.patientId)||(s.wardId&&s.wardId===myWardId));
+}
 function getStatusCounts(){
-  const a=sites.filter(s=>!s.ended);
-  return{all:sites.length,critical:a.filter(s=>getSiteStatus(s)==='critical').length,warning:a.filter(s=>getSiteStatus(s)==='warning').length,safe:a.filter(s=>getSiteStatus(s)==='safe').length,ended:sites.filter(s=>s.ended).length};
+  const vs=getVisibleSites();
+  const a=vs.filter(s=>!s.ended);
+  return{all:vs.length,critical:a.filter(s=>getSiteStatus(s)==='critical').length,warning:a.filter(s=>getSiteStatus(s)==='warning').length,safe:a.filter(s=>getSiteStatus(s)==='safe').length,ended:vs.filter(s=>s.ended).length};
 }
 function renderFilterPills(){
   const c=getStatusCounts();
@@ -2122,8 +2132,14 @@ function renderFilterPills(){
 }
 function setFilter(st){currentFilter=st;renderFilterPills();renderMonitor();}
 function renderStatStrip(id){
-  const c=getStatusCounts();const a=sites.filter(s=>!s.ended);const pi=a.filter(s=>s.lineType==='picc'||s.lineType==='central').length;
-  const _activePt=patients.filter(p=>!p.archived).length;document.getElementById(id).innerHTML=`
+  const isAdmin=currentSession?.role==='ADMIN';
+  const myWardId=currentSession?.sheetId||'';
+  const c=getStatusCounts();
+  const vs=getVisibleSites();
+  const a=vs.filter(s=>!s.ended);
+  const pi=a.filter(s=>s.lineType==='picc'||s.lineType==='central').length;
+  const _activePt=patients.filter(p=>!p.archived&&(isAdmin||!p.wardId||p.wardId===myWardId)).length;
+  document.getElementById(id).innerHTML=`
     <div class="stat-card s-blue"><div class="stat-lbl">Sites ทั้งหมด</div><div class="stat-num">${c.all}</div><div class="stat-sub">${_activePt} ผู้ป่วย active</div></div>
     <div class="stat-card s-safe"><div class="stat-lbl">ปกติ</div><div class="stat-num">${c.safe}</div><div class="stat-sub">VIP 0–1</div></div>
     <div class="stat-card s-warn"><div class="stat-lbl">เฝ้าระวัง</div><div class="stat-num">${c.warning}</div><div class="stat-sub">VIP 2</div></div>
@@ -2139,7 +2155,10 @@ function renderStatStrip(id){
 function renderMonitor(){
   renderStatStrip('statStrip');updateAlertBanner();renderFilterPills();
   const list=document.getElementById('monitorList');
-  const activePts=patients.filter(p=>!p.archived);let html='';let any=false;
+  const isAdmin=currentSession?.role==='ADMIN';
+  const myWardId=currentSession?.sheetId||'';
+  // ADMIN เห็นทุกหอ, NURSE/VIEWER เห็นเฉพาะหอตัวเอง
+  const activePts=patients.filter(p=>!p.archived&&(isAdmin||!p.wardId||p.wardId===myWardId));let html='';let any=false;
   activePts.forEach(pt=>{
     let ps=sites.filter(s=>s.patientId===pt.id);
     if(currentFilter) ps=ps.filter(s=>getSiteStatus(s)===currentFilter);
@@ -2149,6 +2168,7 @@ function renderMonitor(){
     html+=`<div class="pg" id="pg_${pt.id}"><div class="pg-hdr">
       <div class="hn-tag">${pt.hn}</div><div class="pt-name">${pt.name}</div>
       <div class="pt-meta">${pt.gender} · ${pt.age}ปี · เตียง ${pt.bed}</div>
+      ${isAdmin&&pt.wardId?`<div class="pt-cnt" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.25);color:var(--purple)">${wards.find(w=>w.id===pt.wardId)?.emoji||'🏥'} ${wards.find(w=>w.id===pt.wardId)?.name||pt.wardId}</div>`:''}
       <div class="pt-cnt">${ac} active</div>
       <div style="display:flex; gap:5px; margin-left:auto;">
         <button onclick="openAddSite('${pt.id}')" class="btn-add-site-inline" style="margin-left:0;">💉 IV Site</button>
@@ -2221,9 +2241,13 @@ function renderPatientsTable(){
   const wrap=document.getElementById('patientCardsWrap');
   const countChip=document.getElementById('ptCountChip');
   const archiveBtn=document.getElementById('archiveToggleBtn');
+  const isAdmin=currentSession?.role==='ADMIN';
+  const myWardId=currentSession?.sheetId||'';
   const filtered=patients.filter(p=>{
     if(!showArchived&&p.archived) return false;
     if(showArchived&&!p.archived) return false;
+    // ADMIN เห็นทุกหอ, NURSE/VIEWER เห็นเฉพาะหอตัวเอง
+    if(!isAdmin&&p.wardId&&p.wardId!==myWardId) return false;
     return !q||p.hn.toLowerCase().includes(q)||p.name.toLowerCase().includes(q);
   });
   if(archiveBtn){
