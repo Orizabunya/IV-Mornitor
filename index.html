@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IV Site Monitor Pro — ระบบติดตาม IV Site โรงพยาบาล</title>
 
-<!-- ─── SEO Meta Tags ─── -->
 <meta name="description" content="ระบบติดตาม IV Site สำหรับพยาบาลโรงพยาบาล ติดตาม IV Sites รายผู้ป่วย ประเมิน VIP Score แจ้งเตือนเปลี่ยนเข็ม รองรับทุกหอผู้ป่วย">
 <meta name="keywords"   content="IV site monitor, ติดตาม IV, พยาบาล, โรงพยาบาล, VIP score, หลอดเลือดดำอักเสบ, เปลี่ยนเข็ม, ward management">
 <meta name="author"     content="Hospital Informatics Unit">
@@ -13,7 +12,6 @@
 <meta name="theme-color" content="#0D1117">
 <link rel="canonical"  href="https://orizabunya.github.io/iv-monitor/">
 
-<!-- ─── Open Graph (Facebook / LINE / Discord preview) ─── -->
 <meta property="og:type"        content="website">
 <meta property="og:title"       content="IV Site Monitor Pro — ระบบติดตาม IV Site">
 <meta property="og:description" content="ติดตาม IV Sites รายผู้ป่วย · ประเมิน VIP Score · แจ้งเตือนวิกฤต · รองรับทุกหอผู้ป่วย">
@@ -21,19 +19,16 @@
 <meta property="og:image"       content="https://orizabunya.github.io/iv-monitor/">
 <meta property="og:locale"      content="th_TH">
 
-<!-- ─── Twitter Card ─── -->
 <meta name="twitter:card"        content="summary">
 <meta name="twitter:title"       content="IV Site Monitor Pro">
 <meta name="twitter:description" content="ระบบติดตาม IV Site สำหรับโรงพยาบาล">
 
-<!-- ─── PWA / App-like behavior ─── -->
 <meta name="mobile-web-app-capable"      content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title"  content="IV Monitor">
 <meta name="application-name"            content="IV Monitor Pro">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
 
-<!-- ─── Structured Data (JSON-LD) ─── -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -400,7 +395,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .hn-tag{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2px 6px}
 .pt-name{font-size:13px;font-weight:600}
 .pt-meta{font-size:11px;color:var(--text2)}
-.pt-cnt{font-family:'DM Mono',monospace;font-size:10px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--blue);border-radius:5px;padding:2px 7px;margin-left:auto}
+.pt-cnt{font-family:'DM Mono',monospace;font-size:10px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--blue);border-radius:5px;padding:2px 7px}
 
 /* SITE ROW */
 .sr{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.03);border-left:3px solid transparent;transition:background .15s}
@@ -771,7 +766,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 </head>
 <body>
 
-<!-- ════════════ LOGIN ════════════ -->
 <div class="screen" id="screenLogin">
 <div class="login-wrap"><div class="login-box">
   <div class="login-logo-row">
@@ -796,7 +790,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="login-sub">VERSION 6.2 · HOSPITAL SYSTEM</div></div>
   </div>
 
-  <!-- Smart locked ward bar -->
   <div id="lockedWardBar" style="display:none">
     <div class="locked-ward-bar">
       <div class="lw-icon" id="lwIcon">🏥</div>
@@ -808,13 +801,11 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     </div>
   </div>
 
-  <!-- Ward selector (grouped) -->
   <div id="wardSelectorSection">
     <div class="sec-lbl">📋 เลือกหอผู้ป่วย</div>
     <div class="ward-selector" id="loginWardList"></div>
   </div>
 
-  <!-- Lock row -->
   <div class="lock-row off" id="lockRow" onclick="toggleLock()">
     <div class="lock-icon">🔓</div>
     <div class="lock-text">
@@ -848,7 +839,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 </div></div>
 </div>
 
-<!-- ════════════ LOADING ════════════ -->
 <div class="screen hidden" id="screenLoading">
   <div class="load-logo logo-anim">
     <span class="la">💉</span>
@@ -879,7 +869,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
-<!-- ════════════ APP ════════════ -->
 <div class="screen hidden" id="screenApp">
   <div class="topbar">
     <div class="logo-mark logo-anim logo-anim-sm">
@@ -949,7 +938,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 
   <div class="app-body">
-    <!-- MONITOR -->
     <div class="page active" id="pageMonitor">
       <div id="alertBanner" class="alert-banner status-safe">
         <div class="alert-banner-icon" id="alertIcon">✓</div>
@@ -973,9 +961,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div id="monitorList"></div>
     </div>
 
-    <!-- PATIENTS -->
     <div class="page" id="pagePatients">
-      <!-- Header bar -->
       <div class="pt-page-header">
         <div class="pt-header-left">
           <div class="sec-hdr-t">รายชื่อผู้ป่วย</div>
@@ -993,16 +979,12 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
       </div>
 
-      <!-- Patient cards grid (replaces plain table) -->
       <div id="patientCardsWrap"></div>
     </div>
 
-    <!-- STATS -->
     <div class="page" id="pageStats">
-      <!-- API connection badge -->
       <div id="apiStatusBadge" style="display:none;margin-bottom:10px"></div>
 
-      <!-- Stats nav tabs -->
       <div style="display:flex;gap:4px;margin-bottom:14px;background:var(--bg2);border:1px solid var(--border);padding:4px;border-radius:10px;flex-wrap:wrap">
         <button class="stats-tab active" data-st="current"    onclick="switchStatsTab('current',this)"   >📊 ปัจจุบัน</button>
         <button class="stats-tab"        data-st="monthly"    onclick="switchStatsTab('monthly',this)"   >📅 รายเดือน</button>
@@ -1014,7 +996,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
       </div>
 
-      <!-- TAB: ปัจจุบัน -->
       <div class="stats-panel active" id="stab-current">
         <div class="stat-strip" id="statsTop"></div>
         <div class="reports-grid">
@@ -1032,7 +1013,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
       </div>
 
-      <!-- TAB: รายเดือน -->
       <div class="stats-panel" id="stab-monthly">
         <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;flex-wrap:wrap">
           <select class="fsel" id="monthlyWardSel" onchange="renderMonthlyStats()">
@@ -1069,7 +1049,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
       </div>
 
-      <!-- TAB: รายปี -->
       <div class="stats-panel" id="stab-yearly">
         <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;flex-wrap:wrap">
           <select class="fsel" id="yearlyWardSel" onchange="renderYearlyStats()">
@@ -1100,7 +1079,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
       </div>
 
-      <!-- TAB: เปรียบเทียบหอ -->
       <div class="stats-panel" id="stab-reasons" style="display:none"></div>
       <div class="stats-panel" id="stab-ward">
         <div style="margin-bottom:12px;padding:10px 14px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:9px;font-size:11px;color:var(--blue)">
@@ -1125,10 +1103,8 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       </div>
     </div>
 
-    <!-- SETTINGS -->
     <div class="page" id="pageSettings">
       <div class="settings-grid">
-        <!-- User info -->
         <div class="set-card">
           <div class="set-card-title"><span>👤</span> ข้อมูลผู้ใช้งาน</div>
           <div style="display:flex;align-items:center;gap:11px;padding:11px;background:var(--bg3);border-radius:9px;border:1px solid var(--border);margin-bottom:11px">
@@ -1144,7 +1120,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           </div>
         </div>
 
-        <!-- DB -->
         <div class="set-card">
           <div class="set-card-title"><span>🗄️</span> ฐานข้อมูล Google Sheets</div>
           <div id="setDbPermBanner" style="margin-bottom:9px"></div>
@@ -1163,7 +1138,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           </div>
         </div>
 
-        <!-- Theme -->
         <div class="set-card">
           <div class="set-card-title"><span>🎨</span> ธีมการแสดงผล</div>
           <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;margin-bottom:10px">
@@ -1199,7 +1173,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
             <button class="btn-sm btn-outline" style="justify-content:flex-start;padding:9px 13px;font-size:12px" onclick="exportCSV()">📥 ส่งออก CSV</button>
             <button class="btn-sm btn-outline" style="justify-content:flex-start;padding:9px 13px;font-size:12px" onclick="window.print()">🖨 พิมพ์รายงาน</button>
             <button class="btn-sm btn-warn" style="justify-content:flex-start;padding:9px 13px;font-size:12px" onclick="clearLock()">🔓 ล้างการล็อคฐานข้อมูล</button>
-            <!-- ADMIN-ONLY DELETE BUTTONS -->
             <div id="adminOnlyActions"></div>
           </div>
           <div style="margin-top:11px;padding:9px 11px;background:var(--bg3);border-radius:7px;border:1px solid var(--border);font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);line-height:1.9">
@@ -1208,7 +1181,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         </div>
 
         </div>
-        <!-- User management (admin only) -->
         <div class="set-card" id="userMgmtCard" style="display:none">
           <div class="set-card-title"><span>👥</span> จัดการผู้ใช้งาน <span style="font-size:9px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);color:var(--purple);border-radius:4px;padding:2px 6px;margin-left:4px">ADMIN</span></div>
           <div id="userMgmtList"></div>
@@ -1221,9 +1193,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
-<!-- ════ MODALS ════ -->
-
-<!-- CHANGE DB -->
 <div class="modal-bg" id="changeDbModal">
   <div class="modal">
     <div class="modal-hdr"><div class="modal-title">🔄 เปลี่ยนฐานข้อมูล</div><button class="modal-close" onclick="closeModal('changeDbModal')">✕</button></div>
@@ -1236,7 +1205,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
-<!-- ADD WARD (admin) -->
 <div class="modal-bg" id="addWardModal">
   <div class="modal">
     <div class="modal-hdr"><div class="modal-title">➕ เพิ่มหอผู้ป่วย</div><button class="modal-close" onclick="closeModal('addWardModal')">✕</button></div>
@@ -1260,7 +1228,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
-<!-- ADD USER (admin) -->
 <div class="modal-bg" id="addUserModal">
   <div class="modal" style="width:420px">
     <div class="modal-hdr"><div class="modal-title" id="addUserTitle">👩‍⚕️ เพิ่มพยาบาล</div><button class="modal-close" onclick="closeModal('addUserModal')">✕</button></div>
@@ -1281,7 +1248,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
-<!-- ADD PATIENT -->
 <div class="modal-bg" id="addPatientModal">
   <div class="modal">
     <div class="modal-hdr"><div class="modal-title">👤 เพิ่มผู้ป่วย</div><button class="modal-close" onclick="closeModal('addPatientModal')">✕</button></div>
@@ -1303,7 +1269,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
-<!-- ADD IV SITE (2-step) -->
 <div class="modal-bg" id="addSiteModal">
   <div class="modal" style="width:410px">
     <div class="modal-hdr"><div class="modal-title">💉 <span id="addSiteTitleText">เพิ่ม IV Site</span></div><button class="modal-close" onclick="closeModal('addSiteModal')">✕</button></div>
@@ -1314,7 +1279,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="step-line" id="stepLine1"></div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px"><div class="step-dot-ind" id="stepDot2">2</div><div class="step-label">เวลา&รายละเอียด</div></div>
     </div>
-    <!-- Step 1 -->
     <div class="step-panel active" id="siteStep1">
       <div class="fld-lbl">ประเภท Line</div>
       <div style="display:flex;gap:5px;margin-bottom:10px">
@@ -1323,17 +1287,13 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
         <button class="type-btn" data-t="central" onclick="selectLineType(this)">🏥 Central</button>
       </div>
       <div class="fld-lbl">ตำแหน่งที่แทง *</div>
-      <!-- Hidden value holder (backward-compat) -->
       <input type="hidden" id="sitePos" value="">
 
-      <!-- ═══ VISUAL POSITION PICKER ═══ -->
       <div class="pos-picker" id="posPicker">
-        <!-- Selected display -->
         <div class="pos-selected-bar" id="posSelectedBar">
           <span class="pos-sel-icon" id="posSelIcon">📍</span>
           <span class="pos-sel-text" id="posSelText">กรุณาเลือกตำแหน่ง</span>
         </div>
-        <!-- Region tabs -->
         <div class="pos-tabs">
           <button class="pos-tab active" data-ptab="arm"   onclick="switchPosTab('arm',this)"  >💪 แขน</button>
           <button class="pos-tab"        data-ptab="leg"   onclick="switchPosTab('leg',this)"  >🦵 ขา</button>
@@ -1341,7 +1301,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <button class="pos-tab"        data-ptab="other" onclick="switchPosTab('other',this)">✏️ อื่นๆ</button>
         </div>
 
-        <!-- ARM panel -->
         <div class="pos-panel pos-panel-arm active" id="posTab-arm">
           <div class="pos-body-grid">
             <div class="pos-side">
@@ -1397,7 +1356,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div class="pos-note">💡 AC (Antecubital) = ตำแหน่งที่พบบ่อยที่สุด / Cephalic-Basilic = เส้นใหญ่กว่า</div>
         </div>
 
-        <!-- LEG panel -->
         <div class="pos-panel pos-panel-leg" id="posTab-leg">
           <div class="pos-leg-warn">⚠️ ขาเป็น alternative เมื่อแขนทั้ง 2 ข้างใช้ไม่ได้ · ความเสี่ยง thrombosis สูงกว่า</div>
           <div class="pos-body-grid">
@@ -1454,7 +1412,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div class="pos-note">💡 GSV (Great Saphenous) = เส้นที่พบบ่อยที่สุดบริเวณขา · Femoral = เฉพาะ ICU/กรณีวิกฤต</div>
         </div>
 
-        <!-- LINE panel (PICC / Central) -->
         <div class="pos-panel pos-panel-line" id="posTab-line">
           <div class="pos-line-section">
             <div class="pos-line-hdr">📌 PICC Line</div>
@@ -1522,7 +1479,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div class="pos-note">💡 PICC Limit = 168h (7วัน) · Central & Port = 720h+</div>
         </div>
 
-        <!-- OTHER / Free text panel -->
         <div class="pos-panel pos-panel-other" id="posTab-other">
           <div style="padding:12px;background:var(--bg3);border-radius:9px;border:1px solid var(--border);margin-bottom:10px;font-size:11px;color:var(--text3);line-height:1.7">
             ✏️ <b style="color:var(--text2)">ระบุตำแหน่งที่ไม่มีในรายการ</b><br>
@@ -1542,8 +1498,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           </div>
         </div>
       </div>
-      <!-- /pos-picker -->
-
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:2px">
         <div><div class="fld-lbl">ยา / สารน้ำ *</div><input class="inp" id="siteDrug" placeholder="เช่น 0.9%NSS 1000mL" style="margin-bottom:0"></div>
         <div><div class="fld-lbl">อัตราหยด</div><input class="inp" id="siteRate" placeholder="เช่น 80 mL/hr" style="margin-bottom:0"></div>
@@ -1551,7 +1505,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="err-box" id="siteErr1">⚠️ กรุณากรอกตำแหน่งและยา</div>
       <div class="btn-row"><button class="btn-sm btn-outline" onclick="closeModal('addSiteModal')">ยกเลิก</button><button class="btn-sm btn-primary" onclick="goSiteStep2()">ถัดไป →</button></div>
     </div>
-    <!-- Step 2 -->
     <div class="step-panel" id="siteStep2">
       <div style="padding:7px 10px;background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.15);border-radius:7px;font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;line-height:1.8;margin-bottom:10px">
         📋 Peripheral = <b style="color:var(--blue)">96h</b> · PICC/C-line = <b style="color:var(--purple)">168h (7วัน)</b>
@@ -1572,7 +1525,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
-<!-- END SITE -->
 <div class="modal-bg" id="endSiteModal">
   <div class="modal">
     <div class="modal-hdr"><div class="modal-title">🔴 สิ้นสุด IV Site</div><button class="modal-close" onclick="closeModal('endSiteModal')">✕</button></div>
@@ -1580,7 +1532,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <input type="hidden" id="endSiteId">
     <div class="fld-lbl">สาเหตุการสิ้นสุด</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:9px" id="endReasonGrid"></div>
-    <!-- PICC/Central — Doctor section (hidden for peripheral) -->
     <div id="endDoctorSection" style="display:none;margin-bottom:10px;padding:12px 13px;background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.25);border-radius:10px">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:9px">
         <span style="font-size:15px">👨‍⚕️</span>
@@ -1606,7 +1557,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   </div>
 </div>
 
-<!-- ASSESS VIP -->
 <div class="modal-bg" id="assessModal">
   <div class="modal">
     <div class="modal-hdr"><div class="modal-title">📋 ประเมิน VIP Score</div><button class="modal-close" onclick="closeModal('assessModal')">✕</button></div>
@@ -1624,6 +1574,45 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <div class="btn-row">
       <button class="btn-sm btn-outline" onclick="closeModal('assessModal')">ปิด</button>
       <button class="btn-sm btn-primary" onclick="saveAssessment()">💾 บันทึกการประเมิน</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="voidPatientModal">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-title" style="color:var(--crit)">🗑️ ยกเลิกข้อมูลผู้ป่วย</div>
+      <button class="modal-close" onclick="closeModal('voidPatientModal')">✕</button>
+    </div>
+    <div class="modal-sub" style="color:var(--crit)">ลบข้อมูลออกจากระบบและไม่นำไปคิดสถิติ (เก็บประวัติการลบ)</div>
+    
+    <input type="hidden" id="voidPtId">
+    
+    <div style="padding:10px; background:var(--bg3); border-radius:8px; border:1px solid var(--border); margin-bottom:10px;">
+      <div style="font-family:'DM Mono', monospace; font-size:10px; color:var(--text3);">ข้อมูลที่ต้องการลบ</div>
+      <div id="voidPtInfo" style="font-size:13px; font-weight:600; margin-top:2px;">—</div>
+    </div>
+
+    <div class="fld-lbl">ผู้ดำเนินการลบ (อ้างอิงตาม Log-in)</div>
+    <input class="inp" id="voidNurseName" disabled style="margin-bottom:10px; opacity:0.7;">
+
+    <div class="fld-lbl">เหตุผลการลบ *</div>
+    <select class="inp" id="voidReason" style="margin-bottom:10px;" onchange="document.getElementById('voidOtherReason').style.display = this.value==='อื่นๆ' ? 'block' : 'none'">
+      <option value="" disabled selected>-- เลือกเหตุผล --</option>
+      <option value="ลงข้อมูลซ้ำซ้อน (Duplicate)">ลงข้อมูลซ้ำซ้อน (Duplicate)</option>
+      <option value="เลือกเตียง/หอผู้ป่วยผิด">เลือกเตียง/หอผู้ป่วยผิด</option>
+      <option value="ระบุ HN หรือชื่อผู้ป่วยผิด">ระบุ HN หรือชื่อผู้ป่วยผิด</option>
+      <option value="ผู้ป่วยไม่ได้ Admit จริง">ผู้ป่วยไม่ได้ Admit จริง</option>
+      <option value="อื่นๆ">อื่นๆ (โปรดระบุ)</option>
+    </select>
+    
+    <input class="inp" id="voidOtherReason" placeholder="ระบุเหตุผลอื่นๆ..." style="margin-bottom:10px; display:none;">
+
+    <div class="err-box" id="voidErr">⚠️ กรุณาระบุเหตุผลการลบ</div>
+    
+    <div class="btn-row">
+      <button class="btn-sm btn-outline" onclick="closeModal('voidPatientModal')">ยกเลิก</button>
+      <button class="btn-sm btn-danger" onclick="confirmVoidPatient()">🗑️ ยืนยันการลบทิ้ง</button>
     </div>
   </div>
 </div>
@@ -2087,7 +2076,10 @@ function renderMonitor(){
       <div class="hn-tag">${pt.hn}</div><div class="pt-name">${pt.name}</div>
       <div class="pt-meta">${pt.gender} · ${pt.age}ปี · เตียง ${pt.bed}</div>
       <div class="pt-cnt">${ac} active</div>
-      <button onclick="openAddSite('${pt.id}')" class="btn-add-site-inline">💉 IV Site</button>
+      <div style="display:flex; gap:5px; margin-left:auto;">
+        <button onclick="openAddSite('${pt.id}')" class="btn-add-site-inline" style="margin-left:0;">💉 IV Site</button>
+        <button onclick="openVoidPatient('${pt.id}')" class="btn-add-site-inline" style="margin-left:0; color:var(--crit); border-color:rgba(239,68,68,.3); background:rgba(239,68,68,.08);" title="ยกเลิก/ลบรายการผิดพลาด">🗑️</button>
+      </div>
     </div>`;
     ps.sort((a,b)=>{const o={critical:0,warning:1,safe:2,ended:3};return o[getSiteStatus(a)]-o[getSiteStatus(b)];})
     .forEach(s=>{
@@ -2630,15 +2622,6 @@ function deleteUser(uname){
 }
 
 /* ══════════════════════════════════
-   ADD / EDIT PATIENT
-══════════════════════════════════ */
-function openAddPatient(){
-  ['ptHn','ptName','ptBed','ptAge'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
-  const g=document.getElementById('ptGender');if(g) g.value='ชาย';
-  document.getElementById('ptErr').style.display='none';
-  document.getElementById('addPatientModal').classList.add('show');
-}
-/* ══════════════════════════════════
    API WRITE HELPERS
 ══════════════════════════════════ */
 async function savePatientAPI(pt){
@@ -2695,6 +2678,13 @@ async function pushAllToAPI(){
 /* ══════════════════════════════════
    ADD / EDIT PATIENT
 ══════════════════════════════════ */
+function openAddPatient(){
+  ['ptHn','ptName','ptBed','ptAge'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  const g=document.getElementById('ptGender');if(g) g.value='ชาย';
+  document.getElementById('ptErr').style.display='none';
+  document.getElementById('addPatientModal').classList.add('show');
+}
+
 function savePatient(){
   const hn=document.getElementById('ptHn').value.trim(),name=document.getElementById('ptName').value.trim(),bed=document.getElementById('ptBed').value.trim();
   const err=document.getElementById('ptErr');
@@ -2708,6 +2698,82 @@ function savePatient(){
 }
 
 /* ══════════════════════════════════
+   VOID PATIENT (ลบกรณีลงผิด/ซ้ำซ้อน)
+══════════════════════════════════ */
+function openVoidPatient(pid) {
+  const pt = patients.find(p => p.id === pid);
+  if (!pt) return;
+  
+  document.getElementById('voidPtId').value = pid;
+  document.getElementById('voidPtInfo').textContent = `${pt.hn} : ${pt.name} (เตียง ${pt.bed})`;
+  document.getElementById('voidNurseName').value = currentSession?.name || 'Unknown';
+  document.getElementById('voidReason').value = '';
+  document.getElementById('voidOtherReason').value = '';
+  document.getElementById('voidOtherReason').style.display = 'none';
+  document.getElementById('voidErr').style.display = 'none';
+  
+  document.getElementById('voidPatientModal').classList.add('show');
+}
+
+function confirmVoidPatient() {
+  const pid = document.getElementById('voidPtId').value;
+  const pt = patients.find(p => p.id === pid);
+  if (!pt) return;
+
+  const selectReason = document.getElementById('voidReason').value;
+  const otherReason = document.getElementById('voidOtherReason').value.trim();
+  const err = document.getElementById('voidErr');
+
+  if (!selectReason) {
+    err.textContent = '⚠️ กรุณาเลือกเหตุผลการลบ';
+    err.style.display = 'block';
+    return;
+  }
+  if (selectReason === 'อื่นๆ' && !otherReason) {
+    err.textContent = '⚠️ กรุณาระบุเหตุผลอื่นๆ ให้ชัดเจน';
+    err.style.display = 'block';
+    return;
+  }
+
+  const finalReason = selectReason === 'อื่นๆ' ? otherReason : selectReason;
+  const nurseName = currentSession?.name || 'Unknown';
+
+  // 1. เก็บ Log ไว้ใน LocalStorage
+  const voidLog = {
+    patientId: pt.id,
+    hn: pt.hn,
+    name: pt.name,
+    deletedBy: nurseName,
+    reason: finalReason,
+    deletedAt: new Date().toISOString()
+  };
+  let localLogs = safeParse(localStorage.getItem('iv_void_logs'), []);
+  localLogs.push(voidLog);
+  localStorage.setItem('iv_void_logs', JSON.stringify(localLogs));
+
+  // 2. ลบออกจากตัวแปร Array หลัก
+  patients = patients.filter(p => p.id !== pid);
+  sites = sites.filter(s => s.patientId !== pid);
+  
+  savePatientsData();
+  closeModal('voidPatientModal');
+  renderAll();
+  showToast(`🗑️ ลบข้อมูล ${pt.name} และเก็บ Log แล้ว`, 'warn');
+
+  // 3. ส่ง API ไปบันทึก Log และลบข้อมูล
+  if (API_URL) {
+    api({
+      action: 'voidPatientWithLog',
+      wardId: pt.wardId || currentSession?.sheetId || '',
+      patientId: pt.id,
+      logData: voidLog
+    }).then(r => {
+      if (!r.ok) showToast('⚠️ ลบใน Sheets ไม่สำเร็จ: ' + r.error, 'err');
+    });
+  }
+}
+
+/* ══════════════════════════════════
    POSITION PICKER
 ══════════════════════════════════ */
 function switchPosTab(tab, btn){
@@ -2716,7 +2782,6 @@ function switchPosTab(tab, btn){
 }
 
 function selectPos(btn){
-  // Deselect all
   document.querySelectorAll('.pos-btn').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
   const pos=btn.dataset.pos;
@@ -2729,7 +2794,6 @@ function setPosValue(pos){
   const txt=document.getElementById('posSelText');
   if(bar) bar.classList.add('has-val');
   if(txt){txt.textContent=pos;txt.classList.add('selected');}
-  // Icon based on body region
   const icon=document.getElementById('posSelIcon');
   if(icon){
     if(pos.includes('ขา')||pos.includes('GSV')||pos.includes('Dorsum Foot')||pos.includes('Femoral')&&!pos.includes('PICC')&&!pos.includes('Central')) icon.textContent='🦵';
@@ -2763,18 +2827,15 @@ function resetPosPicker(){
   if(icon) icon.textContent='📍';
   const cu=document.getElementById('sitePosCustom');
   if(cu) cu.value='';
-  // Reset to arm tab
   switchPosTab('arm',null);
   document.querySelectorAll('.pos-tab').forEach(b=>b.classList.toggle('active',b.dataset.ptab==='arm'));
 }
 
 function setPickerFromValue(pos){
   if(!pos) return;
-  // Try to find and select matching button
   const btn=[...document.querySelectorAll('.pos-btn')].find(b=>b.dataset.pos===pos);
   if(btn){
     btn.classList.add('sel');
-    // Open correct tab
     const panel=btn.closest('.pos-panel');
     if(panel){
       const tab=panel.id.replace('posTab-','');
@@ -2782,7 +2843,6 @@ function setPickerFromValue(pos){
       document.querySelectorAll('.pos-tab').forEach(b=>b.classList.toggle('active',b.dataset.ptab===tab));
     }
   } else {
-    // Custom value — go to other tab and prefill
     switchPosTab('other',null);
     document.querySelectorAll('.pos-tab').forEach(b=>b.classList.toggle('active',b.dataset.ptab==='other'));
     const cu=document.getElementById('sitePosCustom');
@@ -2872,7 +2932,6 @@ function saveSite(){
     showToast('✅ เพิ่ม IV Site แล้ว','success');
   }
   savePatientsData();closeModal('addSiteModal');renderAll();
-  // Push ขึ้น Sheets
   if(API_URL){
     const sObj=editingSiteId?sites.find(x=>x.id===editingSiteId):sites[sites.length-1];
     if(sObj) saveSiteAPI(sObj);
@@ -3051,7 +3110,6 @@ async function doLogin(){
   if(!selectedWard){err.textContent='⚠️ กรุณาเลือกหอก่อน';err.style.display='block';return;}
   const user=getAllUsers()[u];
   if(!user||user.pass!==p){err.textContent='⚠️ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';err.style.display='block';return;}
-  // ★ WARD ACCESS CHECK ★
   if(!canUserAccessWard(u,selectedWard.id)){
     err.textContent=`🔒 ไม่มีสิทธิ์เข้าหอ "${selectedWard.name}" — กรุณาเลือกหอที่ได้รับมอบหมาย`;
     err.style.display='block';return;
@@ -3080,7 +3138,6 @@ function initApp(){
   document.getElementById('drawerRole').textContent=currentSession.role;
   document.getElementById('drawerRole').className='drawer-role role-pill role-'+currentSession.role;
   startClock();startAutoRefresh();renderAll();updateApiStatusBadge();
-  // Sync from Google Sheets in background
   if(API_URL) setTimeout(syncFromAPI, 500);
 }
 function updateTopbarWard(){
@@ -3089,7 +3146,6 @@ function updateTopbarWard(){
   document.getElementById('drawerWardIcon').textContent=w.emoji;document.getElementById('drawerWardName').textContent=w.name;
 }
 function confirmLogout(){
-  // ใช้ custom modal แทน confirm() เพราะ browser บางตัว block native dialogs
   const t=document.getElementById('toast');
   t.innerHTML='<span>👋 ออกจากระบบ?</span> <button onclick="doLogout()" style="margin-left:10px;padding:3px 10px;border-radius:5px;border:none;background:var(--crit);color:#fff;cursor:pointer;font-size:11px;font-weight:700;font-family:\'DM Sans\',sans-serif">ออก</button> <button onclick="document.getElementById(\'toast\').classList.remove(\'show\')" style="margin-left:5px;padding:3px 9px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-size:11px;font-family:\'DM Sans\',sans-serif">ยกเลิก</button>';
   t.className='toast warn show';
@@ -3098,32 +3154,21 @@ function confirmLogout(){
 }
 function doLogout(){
   if(refreshTimer){clearInterval(refreshTimer);refreshTimer=null;}
-  currentSession=null;
-  currentStatsTab='current';
-  currentFilter='';
-  showArchived=false;
-  apiStatsCache=null;
-  // Reset body overflow (กรณี drawer ยังเปิดอยู่)
+  currentSession=null;currentStatsTab='current';currentFilter='';showArchived=false;apiStatsCache=null;
   document.body.style.overflow='';
-  // ปิด drawer ถ้าเปิดอยู่
   document.getElementById('drawer')?.classList.remove('open');
   document.getElementById('drawerOverlay')?.classList.remove('open');
-  // ปิด modal ทั้งหมด
   document.querySelectorAll('.modal-bg.show').forEach(m=>m.classList.remove('show'));
-  // Force-hide ทุก screen จากนั้น show เฉพาะ login
   ['screenApp','screenLoading'].forEach(id=>document.getElementById(id)?.classList.add('hidden'));
   const loginScreen=document.getElementById('screenLogin');
   if(loginScreen) loginScreen.classList.remove('hidden');
-  // Reset form state
   const loginBtn=document.getElementById('loginBtn');
   if(loginBtn) loginBtn.disabled=false;
   const loginPass=document.getElementById('loginPass');
   if(loginPass) loginPass.value='';
-  // Reset loading steps
   ['ls0','ls1','ls2','ls3'].forEach(id=>{const e=document.getElementById(id);if(e) e.classList.remove('done','active');});
   const bar=document.getElementById('loadBarFill');
   if(bar) bar.style.width='0%';
-  // Reset toast
   const t=document.getElementById('toast');
   if(t) t.classList.remove('show');
   initLoginScreen();
