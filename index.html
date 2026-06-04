@@ -1240,6 +1240,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
           <div id="userMgmtList"></div>
           <div style="margin-top:6px;display:flex;gap:6px">
             <button class="btn-sm btn-purple" onclick="openAddUser()">＋ เพิ่มพยาบาล</button>
+            <button class="btn-sm btn-primary" onclick="syncUsersFromAPI()" title="ดึง/push ผู้ใช้ Google Sheets">☁️ Sync Users</button>
           </div>
         </div>
       </div>
@@ -2029,7 +2030,7 @@ function renderLoginWards(filterUsername){
     const grpWards=g.ids.map(id=>wards.find(w=>w.id===id)).filter(Boolean);
     if(!grpWards.length) return;
     const hasAccessible=!allowedIds||grpWards.some(w=>allowedIds.includes(w.id));
-    const isOpen=selectedWard&&grpWards.some(w=>w.id===selectedWard.id);
+    const isOpen=!selectedWard||(selectedWard&&grpWards.some(w=>w.id===selectedWard.id));
     html+=`<div>
       <div class="wg-header ${isOpen?'open':''}" onclick="toggleGroup(this,${gi})">
         <span class="wg-emoji">${g.emoji}</span>
@@ -2712,6 +2713,7 @@ function saveUser(){
   customUsers[uname]={pass,role:'NURSE',name,avatar:'👩‍⚕️',assignedWards:selectedWards.length>0?selectedWards:null};
   saveUsers();renderUserMgmt();closeModal('addUserModal');
   showToast(`✅ ${oldId?'แก้ไข':'เพิ่ม'}ผู้ใช้ "${uname}" แล้ว`,'success');
+  if(API_URL) saveUserAPI(uname,customUsers[uname]);
 }
 function deleteUser(uname){
   if(!confirm(`ลบผู้ใช้ "${uname}" ?`)) return;
@@ -2742,11 +2744,16 @@ async function saveSiteAPI(s){
 }
 async function endSiteAPI(s){
   if(!API_URL) return;
-  try{const r=await api({action:'endSite',siteId:s.id,wardId:s.wardId||currentSession?.sheetId||'',
-    endReason:s.endReason||'—',endNote:'',
-    doctorOff:s.doctorOff||'',doctorReason:s.doctorReason||'',complication:s.complication||''});
-  if(!r.ok) showToast('⚠️ Cloud sync Off Site ไม่ได้','warn');}
-  catch(e){showToast('⚠️ Cloud sync Off Site ไม่ได้','warn');}
+  const wid=s.wardId||(currentSession?currentSession.sheetId:'')||'';
+  try{
+    const payload={action:'endSite',wardId:wid,siteId:s.id,
+      site:JSON.parse(JSON.stringify(s)),
+      endReason:s.endReason||'—',endNote:'',
+      doctorOff:s.doctorOff||'',doctorReason:s.doctorReason||'',complication:s.complication||''};
+    const r=await api(payload);
+    if(r.ok) showToast('☁️ Off Site ขึ้น Sheets แล้ว','success');
+    else{console.error('[IV endSite]',r.error);showToast('⚠️ Off Site: '+(r.error||'error'),'warn');}
+  }catch(e){console.error('[IV endSiteAPI]',e.message);showToast('⚠️ Off Site error: '+e.message,'warn');}
 }
 async function saveAssessmentAPI(s,score){
   if(!API_URL) return;
@@ -2755,6 +2762,31 @@ async function saveAssessmentAPI(s,score){
     patientId:s.patientId,vipScore:score,criteria:crit});
   if(!r.ok) showToast('⚠️ Cloud sync VIP ไม่ได้','warn');}
   catch(e){showToast('⚠️ Cloud sync VIP ไม่ได้','warn');}
+}
+async function saveUserAPI(uname,userObj){
+  if(!API_URL) return;
+  try{
+    const u={username:uname,password:userObj.pass,role:userObj.role||'NURSE',
+      name:userObj.name,avatar:userObj.avatar||'👩‍⚕️',assignedWards:userObj.assignedWards||null,active:true};
+    await api({action:'saveUser',user:u,isNew:true});
+  }catch(e){}
+}
+async function syncUsersFromAPI(){
+  if(!API_URL){showToast('⚠️ ไม่ได้ตั้งค่า API_URL','warn');return;}
+  showToast('☁️ กำลัง sync ผู้ใช้จาก Sheets…','info');
+  try{
+    const r=await api({action:'getUsers'});
+    if(r.ok && r.users){
+      const list=Array.isArray(r.users)?r.users:Object.values(r.users);
+      list.forEach(function(u){
+        if(u.username&&!BUILTIN_USERS[u.username]){
+          customUsers[u.username]={pass:u.password||u.pass||'',role:u.role||'NURSE',
+            name:u.name||u.username,avatar:u.avatar||'👩‍⚕️',assignedWards:u.assignedWards||null};
+        }
+      });
+      saveUsers();showToast('✅ Sync ผู้ใช้: '+list.length+' คน','success');renderUserMgmt();
+    } else showToast('⚠️ ไม่พบข้อมูลผู้ใช้จาก Sheets','warn');
+  }catch(e){showToast('⚠️ Sync ไม่ได้: '+e.message,'warn');}
 }
 async function pushAllToAPI(){
   if(!API_URL){showToast('⚠️ ยังไม่ได้ตั้งค่า API_URL','warn');return;}
@@ -3443,6 +3475,9 @@ async function testAPIConnection(){
       body:JSON.stringify({action:'login',username:currentSession.username,password:currentSession._pass,wardId:currentSession.sheetId}),redirect:'follow'});
     const d=await r.json();
     log+=(d.ok?ok:fail)+' Login ('+currentSession.username+'): '+(d.ok?'OK':'FAIL - '+d.error)+'<br>';
+    if(!d.ok && d.error && d.error.includes('ไม่ถูกต้อง')){
+      log+=warn+' → ผู้ใช้ไม่ได้ sync ขึ้น Sheets — กด ☁️ Sync Users ใน Settings<br>';
+    }
   }catch(e){log+=fail+' Login ERROR: '+e.message+'<br>';}
 
   // Step 4: Test savePatient
