@@ -646,6 +646,58 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .theme-toggle-topbar{display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:all .2s;font-size:16px;flex-shrink:0}
 .theme-toggle-topbar:hover{border-color:var(--border2)}
 
+/* ── FONT SIZE MODE ─────────────────────────── */
+/* โหมดน้องใหม่ = default | โหมดรุ่นแรก = large */
+.btn-fontmode{display:flex;align-items:center;gap:5px;padding:4px 9px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);cursor:pointer;transition:all .2s;font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);white-space:nowrap;flex-shrink:0}
+.btn-fontmode:hover{border-color:var(--border2);color:var(--text)}
+.btn-fontmode .fm-icon{font-size:15px;line-height:1}
+.btn-fontmode .fm-label{font-size:10px;letter-spacing:.02em}
+[data-fontmode="large"] .btn-fontmode{border-color:rgba(251,184,58,.4);background:rgba(251,184,58,.08);color:var(--warn)}
+
+/* Large mode — scale up text, padding, icons across the whole app */
+[data-fontmode="large"] body{font-size:18px}
+[data-fontmode="large"] .pt-name{font-size:18px}
+[data-fontmode="large"] .hn-tag{font-size:14px;padding:3px 9px}
+[data-fontmode="large"] .pt-meta{font-size:15px}
+[data-fontmode="large"] .pt-cnt{font-size:14px}
+[data-fontmode="large"] .sr-pos{font-size:16px}
+[data-fontmode="large"] .sr-drug{font-size:14px}
+[data-fontmode="large"] .sr-status{font-size:14px;padding:4px 10px}
+[data-fontmode="large"] .sr-time{font-size:14px}
+[data-fontmode="large"] .sr-prog-lbl{font-size:12px}
+[data-fontmode="large"] .vip-badge{font-size:14px;padding:3px 9px}
+[data-fontmode="large"] .stat-lbl{font-size:13px}
+[data-fontmode="large"] .stat-num{font-size:44px}
+[data-fontmode="large"] .stat-sub{font-size:14px}
+[data-fontmode="large"] .filter-pill{font-size:14px;padding:8px 14px}
+[data-fontmode="large"] .btn-sm{font-size:15px;padding:9px 16px}
+[data-fontmode="large"] .nav-tab{font-size:14px;padding:8px 14px}
+[data-fontmode="large"] .sec-hdr-t{font-size:14px}
+[data-fontmode="large"] .alert-banner-title{font-size:16px}
+[data-fontmode="large"] .alert-banner-sub{font-size:14px}
+[data-fontmode="large"] .inp{font-size:16px;padding:13px 14px}
+[data-fontmode="large"] .modal-title{font-size:18px}
+[data-fontmode="large"] .modal-sub{font-size:15px}
+[data-fontmode="large"] .fld-lbl{font-size:13px}
+[data-fontmode="large"] .pg-hdr{padding:12px 16px}
+[data-fontmode="large"] .sr{padding:12px 16px}
+[data-fontmode="large"] .drawer-nav-btn{font-size:17px;padding:14px 15px}
+[data-fontmode="large"] .drawer-nav-btn .dn-icon{font-size:24px}
+[data-fontmode="large"] .drawer-uname{font-size:17px}
+[data-fontmode="large"] .drawer-clock{font-size:15px}
+[data-fontmode="large"] .drawer-logout{font-size:17px;padding:13px}
+[data-fontmode="large"] .topbar-right .user-nm{font-size:15px}
+[data-fontmode="large"] .topbar-right .clock-txt{font-size:15px}
+[data-fontmode="large"] .role-pill{font-size:13px;padding:4px 10px}
+[data-fontmode="large"] .btn-add-site-inline{font-size:15px;padding:7px 14px}
+[data-fontmode="large"] .topbar{height:56px}
+[data-fontmode="large"] .app-body{padding:16px 20px 100px}
+/* Toast large */
+[data-fontmode="large"] .toast-msg{font-size:16px}
+/* Table large */
+[data-fontmode="large"] .tm,.mono{font-size:15px}
+[data-fontmode="large"] table td,table th{font-size:15px;padding:10px 12px}
+
 /* ── POSITION PICKER ─────────────────────── */
 .pos-picker{margin-bottom:8px}
 .pos-selected-bar{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;margin-bottom:7px;min-height:36px;transition:border-color .2s}
@@ -903,6 +955,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="role-pill" id="topRole">NURSE</div>
       <div class="user-nm" id="topUser">—</div>
       <div class="clock-txt" id="topClock">—</div>
+      <button class="btn-fontmode" onclick="toggleFontMode()" id="fontModeBtn" title="สลับขนาดตัวอักษร" aria-label="สลับขนาดตัวอักษร"><span class="fm-icon">👁️</span><span class="fm-label" id="fontModeLabel">น้องจบใหม่</span></button>
       <button class="theme-toggle-topbar" onclick="toggleTheme()" id="themeTopbarBtn" title="เปลี่ยนธีม" aria-label="เปลี่ยนธีม">🌙</button>
       <button class="btn-logout" onclick="confirmLogout()" title="ออกจากระบบ" aria-label="ออกจากระบบ">✕</button>
     </div>
@@ -933,6 +986,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     </div>
     <div class="drawer-foot">
       <div class="drawer-clock" id="drawerClock">—</div>
+      <button class="btn-fontmode" onclick="toggleFontMode()" id="fontModeBtnDrawer" style="width:100%;justify-content:center;margin-bottom:8px" title="สลับขนาดตัวอักษร"><span class="fm-icon">👁️</span><span class="fm-label" id="fontModeLabelDrawer">โหมดน้องใหม่</span></button>
       <button class="drawer-logout" onclick="closeDrawer();confirmLogout()" aria-label="ออกจากระบบ">✕ ออกจากระบบ</button>
     </div>
   </div>
@@ -1647,6 +1701,26 @@ function applyTheme(t){
 
 function toggleTheme(){ applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); }
 function setTheme(t){ applyTheme(t); showToast(t==='dark'?'🌙 ธีมมืด':'☀️ ธีมสว่าง','info'); }
+
+/* ── FONT SIZE MODE ── */
+let currentFontMode = localStorage.getItem('iv_fontmode') || 'normal';
+function applyFontMode(mode){
+  currentFontMode = mode;
+  localStorage.setItem('iv_fontmode', mode);
+  document.documentElement.setAttribute('data-fontmode', mode);
+  const isLarge = mode === 'large';
+  const labelTop = document.getElementById('fontModeLabel');
+  const labelDrawer = document.getElementById('fontModeLabelDrawer');
+  if(labelTop) labelTop.textContent = isLarge ? 'พี่จบก่อน' : 'น้องจบใหม่';
+  if(labelDrawer) labelDrawer.textContent = isLarge ? '📐 โหมดพี่จบก่อน (ใหญ่)' : '📐 โหมดน้องจบใหม่ (ปกติ)';
+  const icon = isLarge ? '🔍' : '👁️';
+  document.querySelectorAll('.btn-fontmode .fm-icon').forEach(el=>el.textContent=icon);
+}
+function toggleFontMode(){
+  const next = currentFontMode === 'large' ? 'normal' : 'large';
+  applyFontMode(next);
+  showToast(next==='large'?'🔍 โหมดพี่จบก่อน — ตัวอักษรใหญ่':'👁️ โหมดน้องจบใหม่ — ขนาดปกติ','info');
+}
 
 /* ══════════════════════════════════
    API CONFIGURATION
@@ -3372,6 +3446,7 @@ async function testAPIConnection(){
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded',()=>{
   applyTheme(currentTheme); // Apply saved theme immediately
+  applyFontMode(currentFontMode); // Apply saved font mode
   initLoginScreen();
   if(lockedWardId&&selectedWard){lockEnabled=true;setLockUI(true);}
   // Position picker initialized via resetPosPicker() / setPickerFromValue()
